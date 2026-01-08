@@ -3,13 +3,13 @@ import ReactFlow, { Background, Controls } from "reactflow";
 import "reactflow/dist/style.css";
 import axios from "axios";
 
-import Prompt from "./Pages/Prompt";
-import SideBar from "./Pages/SideBar";
+import Prompt from "./Components/Prompt";
+import SideBar from "./Components/SideBar";
 
 import { useSelector, useDispatch } from "react-redux";
 
 import { setResult, setLoading, ClearAll } from "./PromptSlice/PromptSlice";
-import Thinking from "./Pages/Loading/Thinking";
+import Thinking from "./Components/Loading/Thinking";
 import { Server } from "./Server";
 
 const initialNodes = [
