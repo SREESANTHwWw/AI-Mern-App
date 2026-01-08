@@ -6,11 +6,11 @@ const Thinking = () => {
 
       {/* Modal */}
       <div className="relative z-10 bg-gray-900 px-8 py-6 rounded-2xl shadow-xl max-w-sm text-center">
-        <p className="text-white text-lg font-medium">
-          Connecting to server
+        <p className="text-white font-Share_Tech text-lg font-medium">
+         Thinking
         </p>
 
-        <p className="mt-2 text-sm text-gray-300">
+        <p className="mt-2 text-sm font-Share_Tech text-gray-300">
           This app uses free hosting, so the server may take a few seconds to wake up.
         </p>
 
