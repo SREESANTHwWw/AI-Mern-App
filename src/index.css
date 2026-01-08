@@ -1,0 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech&display=swap");
+@import "tailwindcss";
+
+:root {
+  --body: #191919;
+}
+
+@theme {
+  --font-Share: "Share Tech", sans-serif;
+}
