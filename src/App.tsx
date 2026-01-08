@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { setResult, setLoading, ClearAll } from "./PromptSlice/PromptSlice";
 import Thinking from "./Pages/Loading/Thinking";
+import { Server } from "./Server";
 
 const initialNodes = [
   {
@@ -42,7 +43,7 @@ function App() {
     try {
       dispatch(setLoading(true));
 
-      const res = await axios.post("http://localhost:3000/api/ask-ai", {
+      const res = await axios.post(Server, {
         prompt,
       });
 

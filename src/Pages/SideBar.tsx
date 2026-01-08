@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import logo from "../assets/logo.png";
+import { Server } from "../Server";
 
 type PromptItem = {
   _id: string;
@@ -25,9 +26,7 @@ const SideBar: React.FC<PropsItem> = ({
     const fetchPrompts = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(
-          "http://localhost:3000/api/ask-ai/getAll"
-        );
+        const res = await axios.get(`${Server}/getAll`);
         setPromptData(res.data.data);
       } catch (error) {
         console.error("Failed to fetch prompts", error);
@@ -41,7 +40,6 @@ const SideBar: React.FC<PropsItem> = ({
 
   return (
     <>
-     
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black/60 z-40 md:hidden"
@@ -57,7 +55,6 @@ const SideBar: React.FC<PropsItem> = ({
           md:translate-x-0
         `}
       >
-       
         <button
           className="md:hidden absolute top-4 right-4 text-white text-xl"
           onClick={() => setSidebarOpen(false)}
@@ -65,16 +62,13 @@ const SideBar: React.FC<PropsItem> = ({
           ✕
         </button>
 
-
         <div className="p-4 border-b border-gray-800">
           <img src={logo} alt="Logo" className="w-32 mx-auto" />
         </div>
 
         <div className="p-2 space-y-1 overflow-y-auto ">
           {loading && (
-            <p className="text-gray-500 text-sm text-center">
-              Loading...
-            </p>
+            <p className="text-gray-500 text-sm text-center">Loading...</p>
           )}
 
           {!loading && promptData.length === 0 && (
@@ -88,7 +82,7 @@ const SideBar: React.FC<PropsItem> = ({
               key={item._id}
               className="p-2 rounded text-sm text-gray-300
                          hover:bg-gray-700  transition"
-              onClick={() => setSidebarOpen(false)} 
+              onClick={() => setSidebarOpen(false)}
             >
               {item.prompt}
             </div>

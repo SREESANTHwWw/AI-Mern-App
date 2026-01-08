@@ -1,0 +1,1 @@
+export const Server = "https://ai-lq69.onrender.com/api/ask-ai";

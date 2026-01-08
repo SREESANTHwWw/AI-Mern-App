@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { Server } from "../Server";
 
 type ResponseProps = {
   prompt: string;
@@ -22,7 +23,7 @@ const Response: React.FC<ResponseProps> = ({
   const saveToDB = async () => {
     try {
       setSaving(true);
-      await axios.post("http://localhost:3000/api/ask-ai/savePrompt", {
+      await axios.post(`${Server}/savePrompt`, {
         prompt: storePrompt,
         response: result,
       });
