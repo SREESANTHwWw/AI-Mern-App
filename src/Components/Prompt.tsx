@@ -34,7 +34,6 @@ const Prompt: React.FC<PromptProps> = ({
   return (
     <div className="w-full flex justify-center px-3 sm:px-6 py-4">
       <div className="w-full max-w-xl flex flex-col gap-5 sm:gap-6">
-     
         {result ? (
           <Response
             result={result}
@@ -46,18 +45,21 @@ const Prompt: React.FC<PromptProps> = ({
           />
         ) : (
           <div className="text-center space-y-2">
-            <h1 className="font-[Share_Tech] font-bold text-white
-                           text-3xl sm:text-4xl md:text-5xl">
+            <h1
+              className="font-[Share_Tech] font-bold text-white
+                           text-3xl sm:text-4xl md:text-5xl"
+            >
               Welcome
             </h1>
-            <p className="font-[Share_Tech] text-gray-400
-                          text-xs sm:text-sm md:text-base">
+            <p
+              className="font-[Share_Tech] text-gray-400
+                          text-xs sm:text-sm md:text-base"
+            >
               Explore this Universe – Zero IQ AI
             </p>
           </div>
         )}
 
-      
         <div className="flex gap-2 sm:gap-3">
           <input
             type="text"

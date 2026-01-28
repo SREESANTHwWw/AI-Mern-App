@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import ReactFlow, { Background, Controls } from "reactflow";
+import ReactFlow, { Background, Controls,  } from "reactflow";
 import "reactflow/dist/style.css";
 import axios from "axios";
 
@@ -33,41 +33,69 @@ function App() {
   const { prompt, result, loading } = useSelector((state: any) => state.prompt);
 
   const [nodes, setNodes] = useState(initialNodes);
+  const [edges, setEdges] = useState(initialEdges);
+  const [nodeId, setNodeId] = useState(2);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
   const [saving, setSaving] = useState(false);
   const [storePrompt, setStorePrompt] = useState("");
-  const runFlow = useCallback(async () => {
-    if (!prompt.trim()) return;
-    dispatch(setLoading(true));
-    try {
-      dispatch(setLoading(true));
+  
+const runFlow = useCallback(async () => {
+  if (!prompt.trim()) return;
 
-      const res = await axios.post(Server, {
-        prompt,
-      });
+  dispatch(setLoading(true));
 
-      const answer = res.data.answer;
+  try {
+    const res = await axios.post(Server, { prompt });
+    const answer = res.data.answer;
 
-      dispatch(setResult(answer));
+    const promptId = `${nodeId + 1}`;
+    const responseId = `${nodeId + 2}`;
+    console.log(promptId, nodeId);
+    
 
-      setNodes((prev) =>
-        prev.map((node) =>
-          node.id === "2" ? { ...node, data: { label: answer } } : node
-        )
-      );
-      setStorePrompt(prompt);
-      dispatch(ClearAll(prompt));
-    } catch (err) {
-      console.error(err);
-      dispatch(setLoading(false));
-      alert("AI request failed");
-      dispatch(ClearAll(prompt));
-    } finally {
-      dispatch(setLoading(false));
-      dispatch(ClearAll(prompt));
-    }
-  }, [prompt, dispatch]);
+    const y = 150 + nodeId * 80;
+
+    const promptNode = {
+      id: promptId,
+      position: { x: 100, y },
+      data: { label: prompt },
+    };
+
+    const responseNode = {
+      id: responseId,
+      position: { x: 450, y },
+      data: { label: answer },
+    };
+
+    const newEdges = [
+     
+      {
+        id: `e${nodeId}-${promptId}`,
+        source: `${nodeId}`,
+        target: promptId,
+      },
+     
+      {
+        id: `e${promptId}-${responseId}`,
+        source: promptId,
+        target: responseId,
+      },
+    ];
+
+    setNodes((prev) => [...prev, promptNode, responseNode]);
+    setEdges((prev) => [...prev, ...newEdges]);
+    setNodeId((prev) => prev + 2);
+ setStorePrompt(prompt);
+    dispatch(setResult(answer));
+    dispatch(ClearAll());
+
+  } catch (err) {
+    console.error(err);
+    alert("AI request failed");
+  } finally {
+    dispatch(setLoading(false));
+  }
+}, [prompt, nodeId, dispatch]);
 
   return (
     <div className="w-full h-screen flex flex-col md:flex-row bg-black">
@@ -99,7 +127,7 @@ function App() {
         </div>
 
         <div className="w-full  h-75 md:h-full  rounded-lg">
-          <ReactFlow nodes={nodes} edges={initialEdges} fitView>
+          <ReactFlow nodes={nodes} edges={edges} fitView>
             <Background />
             <Controls />
           </ReactFlow>

@@ -7,5 +7,5 @@ import { Store } from "./Store/Store.ts";
 createRoot(document.getElementById("root")!).render(
   <Provider store={Store}>
     <App />
-  </Provider>
+  </Provider>,
 );
